@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<link href="https://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+<script src="https://cdn.bootcss.com/react/15.1.0/react-with-addons.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.16/browser.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+</head>
+<body>
+
+  <div id="container1">	</div>
+   <div id="container2"></div>
+   <div id="container3"></div>
+   <div id="container4"></div>
+   <div id="container5"></div>
+   <div id="container6"></div>
+    <div id="container7"></div>
+    <div id="container8"></div>
+    <div id="container9"></div>
+
+
+<script type="text/babel">
+	
+
+		
+		var LikeButton=React.createClass({
+			
+			getInitialState:function(){
+				return {
+				  liked:false
+				}
+			},
+			handleClick:function(e){
+				this.setState({liked:!this.state.liked});
+			},
+			render:function(){
+				
+				var text=this.state.liked ? "like" : "haven\'t liked";			
+				return(
+				 <p onClick={this.handleClick.bind(this)}>
+						You {text} this. Click to toggle.
+				 </p>
+				);
+			}
+		});
+
+		ReactDOM.render(<LikeButton />,document.getElementById("container3"))
+
+
+
+			
+	    var MyComponent=React.createClass({
+				
+		   getInitialState:function(){
+				return {
+				  liked:'1'
+				}
+			},
+		    componentDidMount:function(){
+	
+				var el=ReactDOM.findDOMNode(this);
+				alert(el);
+		    },
+		    render:function(){
+		      return (
+				<div className="1114">
+			     You No Bi {this.state.liked}
+				</div>
+		      )
+		    }
+	    })
+		ReactDOM.render(<MyComponent />,document.getElementById("container4"));
+
+		
+		var App=React.createClass({
+
+			 getInitialState:function(){
+				return {
+				  userInput:''
+				};
+			},	
+			handleChange:function(e){
+				this.setState({userInput:e.target.value});
+			},
+			clearAndFocusInput:function(){
+		
+				this.setState({userInput:''},function(){
+				  this.refs.theInput.focus();
+				})
+			},
+			render:function(){
+			 return (
+				<div>	
+					<div onClick={this.clearAndFocusInput.bind(this)}>	
+						Click to Focus and Reset
+					</div>
+					<input type="" ref="theInput" value={this.state.userInput} onChange={this.handleChange.bind(this)} />
+					<p>{this.state.userInput}</p>
+				</div>
+			 )
+			}
+		});
+
+		ReactDOM.render(<App />,document.getElementById("container5"));
+
+
+
+		//组件组合
+		var ProfilePic=React.createClass({
+
+		    render:function(){
+		       return(
+					
+				<img src={'http://graph.facebook.com/' + this.props.username + '/picture'} 
+				style={{width:'60px',height:'60px'}}/>
+		       )
+		    }
+		});
+		var ProfileLink=React.createClass({
+			render:function(){
+			  return (
+				<a href={'http://www.facebook.com/' + this.props.username}>
+					{this.props.username}
+				</a>
+			  )
+			}
+		});
+
+		var Avatar=React.createClass({
+				
+		  render:function(){
+		  	return (
+				<div>	
+					<ProfilePic username={this.props.username} />
+					<ProfileLink username={this.props.username} />
+				</div>  	
+		  	)	
+		  }		
+		});
+
+		ReactDOM.render(<Avatar username="pwh" />,document.getElementById("container6"))
+
+			//通过props传递值
+
+		
+		var ListItemWrapper=React.createClass({
+		  render:function(){
+		    return(
+				<li>{this.props.data.text}</li>
+		    )
+		  }
+		});
+
+		var MyComponent=React.createClass({
+
+		 getDefaultProps: function(){
+		   return{
+		    results:[{id:1,text:'1'},{id:2,text:'2'},{id:3,text:'3'},{id:4,text:'4'}]
+		   }
+		 },
+		 render:function(){
+		   return(
+				
+				<ul>	
+						{this.props.results.map(function(result){
+						
+						   return(
+								<ListItemWrapper key={result.id} data={result} />
+						   )
+
+						})}
+				</ul>
+		    );
+
+		 }
+		 
+		});
+
+		ReactDOM.render(
+		<MyComponent />,document.getElementById("container7")
+		)
+		
+
+
+
+		
+		var GroceryList=React.createClass({
+		
+		  handleClick:function(i){
+		
+		    console.log('You clicked: '+this.props.items[i] );
+				
+		  },
+		  render:function(){
+				
+			var _self=this;	
+			return(
+						
+			  <div>	
+			  		{this.props.items.map(function(item,i){
+
+						return (
+						<div onClick={_self.handleClick.bind(_self,i)} key={i}>{item}</div>
+						)		
+
+			  		})}
+			  </div>	
+
+			)
+
+		  }
+
+		});
+
+		ReactDOM.render(<GroceryList items={['Apple','Banana','Cranberry']} />,document.getElementById("container9"))
+				
+
+
+
+
+
+</script>
+    
+</body>
+</html>

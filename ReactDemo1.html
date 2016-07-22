@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+
+<link href="https://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+<script src="https://cdn.bootcss.com/react/15.1.0/react-with-addons.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.16/browser.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+</head>
+<body>
+     <div id="container"></div>
+
+     <script type="text/babel">
+    	var names=["Alice","Emily","Kate"];
+    	//render方法
+	
+		var HelloMessage=React.createClass({
+			
+			render:function() {	
+				
+				return(
+					<div className='helloMessage'>
+						<h1 className='message'>
+							Hello,{this.props.soulName}	
+						</h1>
+					</div>
+				);	
+			}
+		})
+	
+		//jsx以{}解析数据
+		
+		var Array=React.createClass({
+
+			render:function(){
+				
+				var nodes=this.props.names.map(function(name){
+					 return(
+						<HelloMessage soulName={name}>
+							
+					    </HelloMessage>
+					 )
+				});	
+				return (
+				  <div className="title">
+				  	{nodes}
+				  </div>
+				);
+
+			}
+		});
+
+		var ArrayBox=React.createClass({
+		
+			render:function(){
+				return(
+					<div className="arrayBox">
+						<Array names={this.props.data} />
+					</div>
+				)			
+			}
+
+		});
+
+		ReactDOM.render(
+		    <ArrayBox data={names} />,document.getElementById("container")	
+		);
+			
+	</script>
+</body>
+</html>
